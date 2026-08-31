@@ -1,0 +1,122 @@
+{
+  "issue": {
+    "number": 1,
+    "date": "August 31, 2026",
+    "cover": "runaway-universe",
+    "picks": ["ai-finds-planets", "chess-chunks", "placebo-surgery", "mrna-demotion", "impossible-planet", "cell-invader", "grokking"]
+  },
+  "tags": {
+    "space":    { "label": "space",          "emoji": "🔭" },
+    "ai":       { "label": "AI",             "emoji": "🤖" },
+    "mind":     { "label": "mind & memory",  "emoji": "🧠" },
+    "biology":  { "label": "biology",        "emoji": "🧬" },
+    "physics":  { "label": "physics",        "emoji": "⚛️" },
+    "medicine": { "label": "medicine",       "emoji": "💊" }
+  },
+  "papers": [
+    {
+      "id": "runaway-universe",
+      "n": "001",
+      "title": "The universe is slowing down. Obviously. Right?",
+      "hook": "Two rival teams raced to measure how fast the universe is slowing. The answer looked so wrong they spent months trying to kill it.",
+      "citation": "Riess et al. 1998 · The Astronomical Journal",
+      "tags": ["space", "physics"],
+      "difficulty": 2,
+      "minutes": 25,
+      "status": "live",
+      "url": "catalog/001-runaway-universe.html",
+      "badge": "🏅 Nobel Prize 2011"
+    },
+    {
+      "id": "grokking",
+      "n": "002",
+      "title": "The AI memorized everything… then suddenly understood.",
+      "hook": "Networks trained far past the point of memorization abruptly snap into real understanding — long after training should have stopped.",
+      "citation": "Power et al. 2022 · arXiv",
+      "tags": ["ai"],
+      "difficulty": 3,
+      "minutes": 20,
+      "status": "soon",
+      "url": null,
+      "badge": null
+    },
+    {
+      "id": "ai-finds-planets",
+      "n": "003",
+      "title": "The neural net that found two planets.",
+      "hook": "Google and NASA pointed a network at old telescope data. It caught worlds that human astronomers had missed.",
+      "citation": "Shallue & Vanderburg 2018 · The Astronomical Journal",
+      "tags": ["space", "ai"],
+      "difficulty": 2,
+      "minutes": 15,
+      "status": "soon",
+      "url": null,
+      "badge": null
+    },
+    {
+      "id": "impossible-planet",
+      "n": "004",
+      "title": "The planet that shouldn't exist.",
+      "hook": "The first planet found around another sun was a Jupiter hugging its star — impossible, according to every formation theory.",
+      "citation": "Mayor & Queloz 1995 · Nature",
+      "tags": ["space"],
+      "difficulty": 1,
+      "minutes": 15,
+      "status": "soon",
+      "url": null,
+      "badge": "🏅 Nobel Prize 2019"
+    },
+    {
+      "id": "chess-chunks",
+      "n": "005",
+      "title": "Grandmasters don't have better memory than you.",
+      "hook": "Show a master a real chess position for 5 seconds and they recall it almost perfectly. Scramble the pieces randomly, and their superpower vanishes.",
+      "citation": "Chase & Simon 1973 · Cognitive Psychology",
+      "tags": ["mind"],
+      "difficulty": 1,
+      "minutes": 15,
+      "status": "soon",
+      "url": null,
+      "badge": null
+    },
+    {
+      "id": "cell-invader",
+      "n": "006",
+      "title": "Part of your cells used to be an invader.",
+      "hook": "Mitochondria have their own DNA — because two billion years ago, they were free-living bacteria that got swallowed and never left.",
+      "citation": "Sagan (Margulis) 1967 · J. Theoretical Biology",
+      "tags": ["biology"],
+      "difficulty": 2,
+      "minutes": 20,
+      "status": "soon",
+      "url": null,
+      "badge": null
+    },
+    {
+      "id": "placebo-surgery",
+      "n": "007",
+      "title": "The fake surgery worked just as well.",
+      "hook": "Patients got knee surgery — or a sham operation with only skin incisions. Two years later, both groups reported the same relief.",
+      "citation": "Moseley et al. 2002 · New England Journal of Medicine",
+      "tags": ["medicine", "mind"],
+      "difficulty": 2,
+      "minutes": 20,
+      "status": "soon",
+      "url": null,
+      "badge": null
+    },
+    {
+      "id": "mrna-demotion",
+      "n": "008",
+      "title": "The idea that got her demoted won the Nobel Prize.",
+      "hook": "Katalin Karikó spent decades being told mRNA therapy was a dead end. Then it vaccinated the planet.",
+      "citation": "Karikó & Weissman 2005 · Immunity",
+      "tags": ["biology", "medicine"],
+      "difficulty": 3,
+      "minutes": 25,
+      "status": "soon",
+      "url": null,
+      "badge": "🏅 Nobel Prize 2023"
+    }
+  ]
+}

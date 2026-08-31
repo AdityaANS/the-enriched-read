@@ -1,6 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<title>The Runaway Universe</title>
+<title>The Enriched Read</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Landmark research papers, retold as interactive stories. A new hand-picked issue every few days.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -21,730 +25,222 @@
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--body);
-    font-size:1.125rem;
-    line-height:1.7;
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--body); font-size:1.1rem; line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--accent-wash); color:var(--accent-ink)}
+  a{color:inherit}
+  .wrap{max-width:52rem; margin:0 auto; padding:0 1.5rem}
 
-  .progress{position:fixed; top:0; left:0; width:100%; height:3px; z-index:50}
-  .progress b{display:block; height:100%; width:0; background:var(--ink)}
-
-  .col{max-width:39rem; margin:0 auto; padding:0 1.5rem}
-  .wide{max-width:56rem; margin:0 auto; padding:0 1.5rem}
-  section{padding:4rem 0 .5rem}
-  p{margin:0 0 1.25rem; max-width:36rem}
-  em{font-style:italic}
-  strong{font-weight:600}
-  a{color:var(--ink); text-decoration-color:var(--faint); text-underline-offset:3px}
-  a:hover{text-decoration-color:var(--accent)}
-
-  .eyebrow{
-    font-family:var(--mono); font-size:.72rem; letter-spacing:.16em;
-    text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:.75rem; margin:0 0 1.2rem;
+  /* masthead */
+  .masthead{padding:3.2rem 0 2.2rem; border-bottom:2px solid var(--ink)}
+  .issueline{
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.6rem;
   }
-  .eyebrow::after{content:""; flex:1; height:1px; background:var(--line)}
-  .eyebrow .n{color:var(--accent); font-weight:500}
-
-  h1,h2,h3{font-family:var(--display); font-weight:400; line-height:1.08; text-wrap:balance; margin:0}
-  h2{font-size:clamp(1.9rem,4.5vw,2.5rem); margin-bottom:1.4rem}
-  h3{font-size:1.3rem; margin:2rem 0 .7rem}
-
-  header{padding:5rem 0 3.2rem; border-bottom:1px solid var(--line)}
-  .kicker{font-family:var(--mono); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:2rem}
-  .kicker .n{color:var(--accent)}
-  h1{font-size:clamp(2.8rem,8vw,5.2rem); letter-spacing:-.01em}
-  h1 .flip{font-style:italic; color:var(--accent)}
-  .standfirst{font-size:1.28rem; line-height:1.55; color:var(--muted); max-width:34rem; margin:1.6rem 0 2.2rem}
-  .meta{display:flex; flex-wrap:wrap; gap:.6rem}
-  .chip{font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--muted);
-        border:1px solid var(--line); border-radius:999px; padding:.35rem .8rem; background:var(--paper)}
-  .chip.dots{color:var(--ink)}
-  .paperline{font-family:var(--mono); font-size:.73rem; color:var(--faint); margin-top:2rem; line-height:1.7; max-width:none}
-
-  .pull{
-    font-family:var(--display); font-size:clamp(1.45rem,3.2vw,1.95rem); line-height:1.25;
-    border-left:2px solid var(--accent); padding:.35rem 0 .35rem 1.3rem; margin:2.2rem 0; text-wrap:balance;
+  .issueline .n{color:var(--accent); font-weight:500}
+  .masthead h1{
+    font-family:var(--display); font-weight:400; margin:0;
+    font-size:clamp(3rem,10vw,6rem); line-height:.98; letter-spacing:-.01em; text-wrap:balance;
   }
-  .aside{
-    background:var(--wash); border:1px solid var(--line); border-radius:10px;
-    padding:1.1rem 1.3rem; margin:1.8rem 0; font-size:.98rem; line-height:1.6; color:var(--muted); max-width:36rem;
+  .masthead h1 em{font-style:italic; color:var(--accent)}
+  .tagline{font-size:1.15rem; color:var(--muted); margin:1.2rem 0 0; max-width:33rem}
+
+  /* cover story */
+  .cover{padding:3rem 0 1rem}
+  .kicker{
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:.75rem; margin-bottom:1.4rem;
   }
-  .aside b{color:var(--ink); font-weight:600}
-
-  /* stat blocks */
-  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(10rem,1fr)); gap:.8rem; margin:2rem 0; max-width:36rem}
-  .stat{border:1px solid var(--line); border-radius:10px; padding:1rem 1.1rem; background:var(--paper)}
-  .stat .num{font-family:var(--display); font-size:1.9rem; line-height:1.1; display:block; font-variant-numeric:tabular-nums}
-  .stat .num i{font-style:italic; color:var(--accent)}
-  .stat .lbl{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); line-height:1.5; display:block; margin-top:.35rem}
-
-  /* concept terms */
-  .term{
-    font:inherit; color:inherit; background:none; border:none; padding:0; cursor:pointer;
-    border-bottom:2px dotted var(--accent); font-weight:500;
+  .kicker::after{content:""; flex:1; height:1px; background:var(--line)}
+  .cover-card{display:block; text-decoration:none; border:2px solid var(--ink); border-radius:16px; padding:2.2rem 2rem; transition:background .15s}
+  .cover-card:hover{background:var(--accent-wash)}
+  .cover-card:focus-visible{outline:3px solid var(--accent); outline-offset:3px}
+  .cover-card h2{
+    font-family:var(--display); font-weight:400; margin:0 0 1rem;
+    font-size:clamp(1.9rem,5.5vw,3rem); line-height:1.1; text-wrap:balance;
   }
-  .term:hover{background:var(--accent-wash)}
-  .term:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-  .term[aria-expanded="true"]{background:var(--accent-wash); border-bottom-style:solid}
-  .card{
-    display:none;
-    border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0;
-    background:var(--wash); padding:1rem 1.2rem; margin:0 0 1.5rem; font-size:.96rem; line-height:1.6; max-width:36rem;
+  .cover-card .hook{color:var(--muted); font-size:1.15rem; margin:0 0 1.4rem; max-width:36rem}
+  .meta{display:flex; flex-wrap:wrap; gap:.55rem; margin-bottom:1.6rem}
+  .chip{font-family:var(--mono); font-size:.7rem; letter-spacing:.05em; color:var(--muted);
+        border:1px solid var(--line); border-radius:999px; padding:.32rem .75rem; background:var(--paper)}
+  .cta{
+    display:inline-block; font-family:var(--mono); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper); border-radius:999px; padding:.75rem 1.5rem;
   }
-  .card.open{display:block}
-  .card .t{font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); display:block; margin-bottom:.35rem}
-  .card p{margin:0; max-width:none}
+  .cover-card:hover .cta{background:var(--accent)}
+  .cite{font-family:var(--mono); font-size:.7rem; color:var(--faint); margin-top:1.3rem}
 
-  /* strips */
-  .strip-wrap{margin:2.2rem 0}
-  .strip-hint{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:.85rem}
-  .strip{
-    display:flex; gap:1rem; overflow-x:auto; padding:.25rem .25rem 1rem;
-    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  /* table of contents */
+  .toc{padding:3rem 0 1rem}
+  .row{
+    display:grid; grid-template-columns:3.4rem 1fr auto; gap:1.1rem; align-items:baseline;
+    padding:1.25rem .4rem; border-bottom:1px solid var(--line); text-decoration:none;
   }
-  .strip::-webkit-scrollbar{height:6px}
-  .strip::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px}
-  .strip > *{scroll-snap-align:start; flex:0 0 auto}
-  .tcard{width:15rem; border:1px solid var(--line); border-radius:10px; padding:1rem 1.1rem; background:var(--paper)}
-  .tcard .yr{font-family:var(--mono); font-size:.92rem; font-weight:500; color:var(--accent); display:block; margin-bottom:.35rem; font-variant-numeric:tabular-nums}
-  .tcard .h{font-weight:600; display:block; margin-bottom:.3rem; line-height:1.35}
-  .tcard p{font-size:.9rem; line-height:1.5; color:var(--muted); margin:0; max-width:none}
-  .pcard{width:17rem; background:var(--wash)}
-  .pcard .yr{color:var(--ink)}
-  .pcard .yr b{color:var(--accent)}
+  a.row:hover{background:var(--wash)}
+  a.row:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .row .no{font-family:var(--mono); font-size:.85rem; color:var(--accent); font-variant-numeric:tabular-nums}
+  .row .t{font-family:var(--display); font-size:clamp(1.2rem,3vw,1.55rem); line-height:1.2; display:block; margin-bottom:.25rem; text-wrap:balance}
+  .row .h{font-size:.95rem; color:var(--muted); display:block; max-width:34rem}
+  .row .side{font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; color:var(--muted); text-align:right; white-space:nowrap}
+  .row .side .soon{color:var(--accent-ink); background:var(--accent-wash); border-radius:999px; padding:.25rem .6rem; display:inline-block}
+  .row.dim .t{color:var(--muted)}
 
-  /* figures */
-  figure{margin:2.3rem 0; border:1px solid var(--line); border-radius:12px; padding:1.5rem 1.3rem 1rem; overflow-x:auto}
-  figure svg{display:block; max-width:100%; height:auto; margin:0 auto; color:var(--ink)}
-  figcaption{font-family:var(--mono); font-size:.73rem; line-height:1.6; color:var(--muted); margin-top:1rem; max-width:34rem}
-  figcaption b{color:var(--accent-ink); font-weight:500}
-  .svg-label{font-family:'IBM Plex Mono',monospace; font-size:11.5px}
-  .svg-small{font-family:'IBM Plex Mono',monospace; font-size:10px}
+  /* manifesto */
+  .how{padding:3.2rem 0 1rem}
+  .how-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:1rem}
+  .how-card{border:1px solid var(--line); border-radius:12px; padding:1.3rem 1.3rem 1.1rem; background:var(--wash)}
+  .how-card .n{font-family:var(--mono); font-size:.72rem; color:var(--accent); display:block; margin-bottom:.5rem; letter-spacing:.1em}
+  .how-card .t{font-weight:600; display:block; margin-bottom:.35rem}
+  .how-card p{font-size:.93rem; color:var(--muted); line-height:1.55; margin:0}
 
-  /* bet + prediction */
-  .bet{border:1px dashed var(--accent); border-radius:12px; padding:1.4rem 1.5rem; margin:2.2rem 0; max-width:36rem}
-  .bet .pt{font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:.8rem}
-  .betopts{display:flex; gap:.7rem; flex-wrap:wrap}
-  .betopt{
-    font-family:var(--body); font-size:1rem; background:var(--paper); color:var(--ink);
-    border:1px solid var(--line); border-radius:999px; padding:.55rem 1.1rem; cursor:pointer;
-  }
-  .betopt:hover{border-color:var(--ink)}
-  .betopt:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-  .betopt.picked{border-color:var(--accent); background:var(--accent-wash); font-weight:600}
-  .betopt.dim{opacity:.4; pointer-events:none}
-  .betnote{display:none; margin-top:1rem; font-size:.95rem; color:var(--muted)}
-  .betnote.show{display:block}
+  footer{padding:3rem 0 4rem; margin-top:2rem; border-top:2px solid var(--ink)}
+  footer .wrap{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:.72rem; color:var(--faint); line-height:1.8}
+  footer a{color:var(--muted); text-decoration-color:var(--faint); text-underline-offset:3px}
+  footer a:hover{color:var(--accent-ink)}
 
-  .predict{border:2px solid var(--ink); border-radius:14px; padding:1.9rem 1.7rem; margin:2.6rem 0}
-  .predict .pt{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem}
-  .predict h3{margin-top:0}
-  .opts{display:grid; gap:.7rem; margin:1.3rem 0 0}
-  .opt{
-    font-family:var(--body); font-size:1rem; text-align:left; line-height:1.5;
-    background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:10px;
-    padding:.85rem 1.05rem; cursor:pointer; transition:border-color .15s, background .15s;
-  }
-  .opt:hover{border-color:var(--ink)}
-  .opt:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-  .opt .k{font-family:var(--mono); font-size:.7rem; color:var(--muted); display:block; letter-spacing:.08em; margin-bottom:.1rem}
-  .opt.picked{border-color:var(--accent); background:var(--accent-wash)}
-  .opt.dim{opacity:.45; pointer-events:none}
-  .verdict{display:none; margin-top:1.4rem; border-top:1px dashed var(--line); padding-top:1.3rem}
-  .verdict.show{display:block}
-  .verdict .v{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.6rem; color:var(--accent-ink)}
-  .verdict p{margin-bottom:1rem}
-  .locked{display:none}
-  .locked.show{display:block}
-
-  /* slider demo */
-  .demo{border:1px solid var(--line); border-radius:12px; padding:1.4rem 1.4rem 1.2rem; margin:2.3rem 0; background:var(--wash)}
-  .demo .pt{font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:.9rem}
-  .demo svg{display:block; width:100%; height:auto}
-  .demo input[type=range]{width:100%; accent-color:var(--accent); margin:.8rem 0 .4rem; cursor:pointer}
-  .demo .readout{font-family:var(--mono); font-size:.8rem; color:var(--ink); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-variant-numeric:tabular-nums}
-  .demo .readout b{color:var(--accent-ink); font-weight:500}
-
-  /* suspects */
-  .suspect{border:1px solid var(--line); border-radius:12px; padding:1.3rem 1.4rem; margin:0 0 1rem; max-width:38rem}
-  .suspect .sh{display:flex; align-items:baseline; gap:.8rem; margin-bottom:.5rem}
-  .suspect .no{font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; color:var(--accent)}
-  .suspect .nm{font-family:var(--display); font-size:1.3rem}
-  .suspect p{font-size:1rem; margin-bottom:.9rem}
-  .rbtn{
-    font-family:var(--mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase;
-    background:var(--paper); color:var(--accent-ink); border:1px solid var(--accent); border-radius:999px;
-    padding:.5rem 1rem; cursor:pointer;
-  }
-  .rbtn:hover{background:var(--accent-wash)}
-  .rbtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-  .rbtn[aria-expanded="true"]{display:none}
-  .rbody{display:none; border-top:1px dashed var(--line); padding-top:.9rem; margin-top:.2rem; font-size:.98rem; color:var(--muted); line-height:1.6}
-  .rbody.show{display:block}
-  .rbody .cleared{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-ink); display:block; margin-top:.7rem}
-
-  details{border:1px solid var(--line); border-radius:10px; margin:0 0 .8rem; background:var(--paper); max-width:38rem}
-  summary{cursor:pointer; padding:.95rem 1.15rem; font-weight:600; font-size:1rem; list-style:none; display:flex; gap:.8rem; align-items:baseline}
-  summary::-webkit-details-marker{display:none}
-  summary .q{font-family:var(--mono); font-size:.8rem; color:var(--accent)}
-  summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-  details[open]{background:var(--wash)}
-  details .a{padding:0 1.15rem 1.05rem; font-size:.98rem; color:var(--muted); line-height:1.6}
-
-  .tally{
-    display:flex; gap:2.2rem; flex-wrap:wrap; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    padding:1.5rem 0; margin:2.2rem 0; font-variant-numeric:tabular-nums;
-  }
-  .tally .num{font-family:var(--display); font-size:2.4rem; line-height:1; display:block}
-  .tally .lbl{font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
-  .nextgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.5rem 0 0}
-  .next{border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.2rem 1rem; background:var(--paper)}
-  .next .tag{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:.45rem}
-  .next .h{font-family:var(--display); font-size:1.3rem; line-height:1.2; display:block; margin-bottom:.4rem}
-  .next p{font-size:.92rem; color:var(--muted); line-height:1.5; margin:0; max-width:none}
-
-  footer{padding:2.8rem 0 4.2rem; color:var(--faint); font-family:var(--mono); font-size:.72rem; line-height:1.8}
-
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+  .reveal{opacity:0; transform:translateY(12px); transition:opacity .55s ease, transform .55s ease}
   .reveal.in{opacity:1; transform:none}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     .reveal{opacity:1; transform:none; transition:none}
     *{transition:none !important}
   }
+  @media (max-width:560px){
+    .row{grid-template-columns:2.6rem 1fr}
+    .row .side{grid-column:2; text-align:left; margin-top:.4rem}
+  }
 </style>
+</head>
+<body>
 
-<div class="progress" aria-hidden="true"><b id="pbar"></b></div>
-
-<header>
-  <div class="col">
-    <div class="kicker">the enriched read · paper <span class="n">Nº 001</span></div>
-    <h1>The universe is slowing down. <span class="flip">Obviously. Right?</span></h1>
-    <p class="standfirst">In 1998, two rival teams raced to measure how fast the universe is slowing down. The answer looked so wrong they spent months trying to kill it. It survived.</p>
-    <div class="meta">
-      <span class="chip">⏱ ~25 min</span>
-      <span class="chip">🔭 astronomy</span>
-      <span class="chip dots">difficulty ●●○○</span>
-      <span class="chip">🏅 nobel prize 2011</span>
+<header class="masthead">
+  <div class="wrap">
+    <div class="issueline">
+      <span>issue <span class="n" id="issue-no">№ —</span> · <span id="issue-date"></span></span>
+      <span>picked by hand · new issue every few days</span>
     </div>
-    <p class="paperline">Riess et al. (1998) · “Observational Evidence from Supernovae for an Accelerating Universe and a Cosmological Constant” · <em>The Astronomical Journal</em> 116, 1009 · High-Z Supernova Search Team</p>
+    <h1>Papers are scary.<br><em>Stories aren't.</em></h1>
+    <p class="tagline">The Enriched Read takes one landmark research paper at a time and retells it the way it actually happened — wrong intuition first, then the surprise, then the science. No PhD required.</p>
   </div>
 </header>
 
-<!-- ═══════ ACT 0 ═══════ -->
-<section class="reveal">
-  <div class="col">
-    <div class="eyebrow"><span class="n">act 0</span> your intuition, on the record</div>
-    <h2>Throw a ball in the air.</h2>
-    <p>It slows down. Gravity. Every thrown object in history has done this.</p>
-    <p>Now scale up. The universe has been expanding since the Big Bang. But it's full of stuff, and all that stuff pulls on all the other stuff.</p>
-    <p>So the expansion should be slowing. Like the ball.</p>
-
-    <figure role="group">
-      <svg viewBox="0 0 720 210" role="img" aria-label="Left: a thrown ball slows as it rises, pulled down by gravity. Right: expanding galaxies should slow the same way, pulled together by their own gravity.">
-        <defs>
-          <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
-          </marker>
-          <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="#b03a0e"/>
-          </marker>
-        </defs>
-        <!-- ball side -->
-        <line x1="90" y1="180" x2="230" y2="180" stroke="currentColor" stroke-width="1.3"/>
-        <circle cx="160" cy="150" r="9" fill="currentColor"/>
-        <circle cx="160" cy="96" r="7" fill="currentColor" opacity=".55"/>
-        <circle cx="160" cy="58" r="5.5" fill="currentColor" opacity=".3"/>
-        <line x1="185" y1="150" x2="185" y2="118" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrA)"/>
-        <line x1="185" y1="96" x2="185" y2="78" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrA)" opacity=".55"/>
-        <line x1="185" y1="58" x2="185" y2="50" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrA)" opacity=".3"/>
-        <text x="160" y="203" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".65">rising, but slower each second</text>
-        <!-- divider -->
-        <line x1="330" y1="30" x2="330" y2="185" stroke="currentColor" stroke-width="1" opacity=".15"/>
-        <!-- galaxies side -->
-        <circle cx="500" cy="105" r="11" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <circle cx="500" cy="105" r="3" fill="currentColor"/>
-        <g stroke="#b03a0e" stroke-width="1.5">
-          <line x1="524" y1="93" x2="574" y2="68" marker-end="url(#arrR)"/>
-          <line x1="476" y1="93" x2="426" y2="68" marker-end="url(#arrR)"/>
-          <line x1="524" y1="117" x2="574" y2="142" marker-end="url(#arrR)"/>
-          <line x1="476" y1="117" x2="426" y2="142" marker-end="url(#arrR)"/>
-        </g>
-        <circle cx="592" cy="59" r="6" fill="currentColor" opacity=".5"/>
-        <circle cx="408" cy="59" r="6" fill="currentColor" opacity=".5"/>
-        <circle cx="592" cy="151" r="6" fill="currentColor" opacity=".5"/>
-        <circle cx="408" cy="151" r="6" fill="currentColor" opacity=".5"/>
-        <text x="500" y="203" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".65">galaxies flying apart — gravity should be braking them</text>
-      </svg>
-      <figcaption><b>fig. 0 — the intuition.</b> Same physics, both sides. What goes up slows down. In 1990, doubting this was not a respectable career move.</figcaption>
-    </figure>
-
-    <p>The only open question was <strong>how much</strong> it's slowing. That number decides how everything ends. Two endings were on the menu:</p>
-
-    <div class="bet" id="bet">
-      <div class="pt">◈ place a bet — you'll get it back at the end</div>
-      <div class="betopts" role="group" aria-label="Bet on the fate of the universe">
-        <button class="betopt" data-bet="crunch">💥 Big Crunch — gravity wins, it all falls back</button>
-        <button class="betopt" data-bet="coast">♾️ Coast forever — it thins out, never returns</button>
-      </div>
-      <div class="betnote" id="betnote"></div>
+<main>
+  <section class="cover reveal">
+    <div class="wrap">
+      <div class="kicker">this issue's cover story</div>
+      <a class="cover-card" id="cover-card" href="#">
+        <h2 id="cover-title"></h2>
+        <p class="hook" id="cover-hook"></p>
+        <div class="meta" id="cover-meta"></div>
+        <span class="cta">start reading →</span>
+        <div class="cite" id="cover-cite"></div>
+      </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════ ACT 1 ═══════ -->
-<section class="reveal">
-  <div class="col">
-    <div class="eyebrow"><span class="n">act 1</span> the setup</div>
-    <h2>A blunder, and two teams that didn't like each other</h2>
-    <p>First, meet the villain of the story. In 1917, Einstein's own equations told him the universe couldn't sit still. He didn't believe them. So he bolted on a fudge factor — the <button class="term" data-card="c-lambda" aria-expanded="false" aria-controls="c-lambda">cosmological constant</button> — to hold everything in place.</p>
-    <div class="card" id="c-lambda" role="note"><span class="t">concept · cosmological constant (Λ)</span><p>Energy belonging to empty space itself. Matter pulls things together; this pushes space apart. Einstein invented it to freeze the universe, then dropped it when expansion was discovered.</p></div>
-    <p>Twelve years later, Hubble showed the universe was expanding. The fudge factor got deleted. The story goes Einstein called it his biggest blunder.</p>
-    <p>Remember it. It comes back.</p>
-    <p>By the 1990s, two groups believed the slowdown could finally be measured. They just had to compare the expansion rate <em>now</em> with the rate <em>billions of years ago</em>.</p>
-    <div class="aside"><b>Team 1 — the Supernova Cosmology Project.</b> Saul Perlmutter's group at Berkeley. Particle physicists, outsiders, grinding since 1988 while astronomers rolled their eyes.<br><br><b>Team 2 — the High-Z Supernova Search Team.</b> Formed 1994 by Brian Schmidt. Veteran supernova astronomers, including a postdoc named Adam Riess — whose analysis is this paper.</div>
-    <p>Same telescopes. Same goal. Real rivalry. Keep that in mind too, because it's about to matter in the best possible way.</p>
+  <section class="toc reveal">
+    <div class="wrap">
+      <div class="kicker">in this issue</div>
+      <div id="toc"></div>
+    </div>
+  </section>
 
-    <div class="strip-wrap wide" style="padding:0">
-      <div class="strip-hint">the road to 1998 — scroll sideways ⟶</div>
-      <div class="strip" tabindex="0" aria-label="Timeline of events leading to the 1998 discovery, scrollable sideways">
-        <div class="tcard"><span class="yr">1917</span><span class="h">Einstein adds Λ</span><p>A fudge factor to keep the universe static. He later disowns it.</p></div>
-        <div class="tcard"><span class="yr">1929</span><span class="h">Hubble: it's expanding</span><p>Distant galaxies recede from us — the farther, the faster.</p></div>
-        <div class="tcard"><span class="yr">1934</span><span class="h">Supernovae named</span><p>Baade &amp; Zwicky describe exploding stars that outshine whole galaxies.</p></div>
-        <div class="tcard"><span class="yr">1993</span><span class="h">The Phillips fix</span><p>A supernova's fade rate reveals its true brightness. The key calibration trick.</p></div>
-        <div class="tcard"><span class="yr">1994</span><span class="h">The rival team forms</span><p>Schmidt &amp; co. launch the High-Z team to race Perlmutter's group.</p></div>
-        <div class="tcard"><span class="yr">1997</span><span class="h">The data turns weird</span><p>Distant supernovae keep coming out too dim. Both teams quietly worry.</p></div>
-        <div class="tcard"><span class="yr">1998</span><span class="h">This paper</span><p>The High-Z team publishes the unthinkable. Perlmutter's team confirms in 1999.</p></div>
-        <div class="tcard"><span class="yr">2011</span><span class="h">Nobel Prize</span><p>Perlmutter, Schmidt &amp; Riess share it for the accelerating universe.</p></div>
+  <section class="how reveal">
+    <div class="wrap">
+      <div class="kicker">how an enriched read works</div>
+      <div class="how-grid">
+        <div class="how-card"><span class="n">01</span><span class="t">Your intuition goes first</span><p>Every read opens with what a smart person would expect. Usually, that's wrong — and that's the fun.</p></div>
+        <div class="how-card"><span class="n">02</span><span class="t">You commit before the reveal</span><p>Place a bet, make a prediction. Being wrong on the record is what makes the answer stick.</p></div>
+        <div class="how-card"><span class="n">03</span><span class="t">Depth is one tap away</span><p>Unfamiliar concepts expand in place. Know it already? Never slowed down. New to it? Three plain sentences.</p></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ═══════ ACT 2 ═══════ -->
-<section class="reveal">
-  <div class="col">
-    <div class="eyebrow"><span class="n">act 2</span> the measurement problem</div>
-    <h2>How do you measure five billion light-years?</h2>
-    <p>No tape measure reaches another galaxy. But there's a trick you already know: a light bulb looks dimmer the farther away it is. Precisely, predictably dimmer.</p>
-    <p>So if you knew a bulb's true wattage, its apparent dimness would <em>tell you</em> its distance. Astronomers call such an object a <button class="term" data-card="c-candle" aria-expanded="false" aria-controls="c-candle">standard candle</button>.</p>
-    <div class="card" id="c-candle" role="note"><span class="t">concept · standard candle</span><p>Anything whose true brightness is known. Compare true brightness to apparent brightness and the dimming factor gives you distance — like judging how far a 60-watt bulb is at night.</p></div>
-
-    <div class="demo" id="demo">
-      <div class="pt">⟡ try it — drag the supernova away</div>
-      <svg viewBox="0 0 720 150" role="img" aria-label="Interactive: a telescope on the left observes a supernova whose apparent brightness falls with the square of its distance.">
-        <rect x="28" y="58" width="34" height="34" rx="5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <line x1="62" y1="66" x2="80" y2="58" stroke="currentColor" stroke-width="1.4"/>
-        <text x="45" y="115" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".65">you</text>
-        <line x1="95" y1="75" x2="655" y2="75" stroke="currentColor" stroke-width="1" opacity=".18" stroke-dasharray="3 4"/>
-        <g id="sn">
-          <circle id="sn-glow" cx="0" cy="75" r="26" fill="#b03a0e" opacity=".18"/>
-          <circle id="sn-core" cx="0" cy="75" r="12" fill="#b03a0e"/>
-        </g>
-        <text id="sn-lbl" x="0" y="128" text-anchor="middle" class="svg-small" fill="#8f2f0b">supernova</text>
-      </svg>
-      <input type="range" id="dist" min="10" max="100" value="25" step="1" aria-label="Distance of the supernova">
-      <div class="readout">
-        <span>distance: <b id="ro-d">2.5 billion ly</b></span>
-        <span>looks <b id="ro-f">6×</b> dimmer</span>
-        <span>rule: dimness = distance²</span>
-      </div>
-    </div>
-
-    <p>One problem: the universe would have to sell a standardized bulb. It does.</p>
-    <p>When a <button class="term" data-card="c-dwarf" aria-expanded="false" aria-controls="c-dwarf">white dwarf</button> steals gas from a neighboring star, its mass creeps up toward a hard physical ceiling. The moment it arrives, it detonates: a <strong>Type Ia supernova</strong>.</p>
-    <div class="card" id="c-dwarf" role="note"><span class="t">concept · white dwarf</span><p>The dead core of a Sun-like star — the Sun's mass crushed into an Earth-sized ball. Past 1.4 solar masses (the Chandrasekhar limit) it can't hold itself up, and it explodes.</p></div>
-    <p>Same trigger mass, every time. So: same explosion, same true brightness, every time. A standardized bomb, visible from halfway across the universe.</p>
-
-    <div class="stats">
-      <div class="stat"><span class="num">1.4<i>☉</i></span><span class="lbl">trigger mass — identical for every white dwarf</span></div>
-      <div class="stat"><span class="num">~5 bn</span><span class="lbl">suns' worth of light per explosion</span></div>
-      <div class="stat"><span class="num">1<span style="font-size:1.1rem">/century</span></span><span class="lbl">per galaxy. they are very rare</span></div>
-    </div>
-
-    <figure role="group">
-      <svg viewBox="0 0 720 400" role="img" aria-label="Flowchart: a white dwarf steals mass from a companion star, reaches the 1.4 solar mass limit, explodes as a Type Ia supernova with fixed brightness, so dimness reveals distance.">
-        <defs>
-          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
-          </marker>
-        </defs>
-        <rect x="20" y="28" width="200" height="66" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="120" y="55" text-anchor="middle" class="svg-label" fill="currentColor">white dwarf</text>
-        <text x="120" y="72" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".6">dead star, Earth-sized</text>
-        <rect x="260" y="28" width="200" height="66" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="360" y="55" text-anchor="middle" class="svg-label" fill="currentColor">companion star</text>
-        <text x="360" y="72" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".6">unlucky neighbor</text>
-        <line x1="260" y1="61" x2="228" y2="61" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
-        <text x="244" y="48" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".7">steals gas</text>
-        <line x1="120" y1="94" x2="120" y2="140" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
-        <text x="132" y="122" class="svg-small" fill="currentColor" opacity=".7">mass creeps up…</text>
-        <rect x="20" y="146" width="290" height="62" rx="8" fill="none" stroke="#b03a0e" stroke-width="1.8"/>
-        <text x="165" y="172" text-anchor="middle" class="svg-label" fill="#b03a0e">hits 1.4 × mass of Sun</text>
-        <text x="165" y="189" text-anchor="middle" class="svg-small" fill="#b03a0e" opacity=".85">the hard ceiling — same for every white dwarf</text>
-        <line x1="165" y1="208" x2="165" y2="252" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
-        <text x="177" y="234" class="svg-small" fill="currentColor" opacity=".7">detonates</text>
-        <rect x="20" y="258" width="290" height="62" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="165" y="284" text-anchor="middle" class="svg-label" fill="currentColor">Type Ia supernova</text>
-        <text x="165" y="301" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".6">≈ same true brightness, every time</text>
-        <line x1="310" y1="289" x2="420" y2="289" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
-        <text x="365" y="277" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".7">therefore</text>
-        <rect x="426" y="240" width="272" height="98" rx="8" fill="#fdf1ea" stroke="#b03a0e" stroke-width="1.8"/>
-        <text x="562" y="278" text-anchor="middle" class="svg-label" fill="#8f2f0b">how dim it looks</text>
-        <text x="562" y="298" text-anchor="middle" class="svg-label" fill="#8f2f0b">= how far it is</text>
-        <text x="562" y="322" text-anchor="middle" class="svg-small" fill="#8f2f0b" opacity=".8">a cosmic tape measure</text>
-      </svg>
-      <figcaption><b>fig. 1 — the standardized bomb.</b> Same trigger mass → same true brightness → dimness converts straight into distance.</figcaption>
-    </figure>
-
-    <p>Second problem: these explosions are once-a-century events, and they fade in weeks. You can't point at a galaxy and wait.</p>
-    <p>So the teams stopped waiting for luck and started manufacturing it:</p>
-
-    <div class="strip-wrap wide" style="padding:0">
-      <div class="strip-hint">the discovery pipeline — scroll sideways ⟶</div>
-      <div class="strip" tabindex="0" aria-label="The five-step supernova discovery pipeline, scrollable sideways">
-        <div class="tcard pcard"><span class="yr"><b>01</b> · image</span><span class="h">Photograph thousands of galaxies</span><p>Wide-field camera, moonless night. One frame holds ~5,000 galaxies.</p></div>
-        <div class="tcard pcard"><span class="yr"><b>02</b> · wait</span><span class="h">Come back ~3 weeks later</span><p>Long enough for new explosions. Short enough that none have faded.</p></div>
-        <div class="tcard pcard"><span class="yr"><b>03</b> · subtract</span><span class="h">New image minus old image</span><p>Everything unchanged cancels to black. A leftover dot is <em>new</em>.</p></div>
-        <div class="tcard pcard"><span class="yr"><b>04</b> · confirm</span><span class="h">Grab its spectrum</span><p>Verify it's a Type Ia; measure its <em>redshift</em> — how much the universe stretched in transit.</p></div>
-        <div class="tcard pcard"><span class="yr"><b>05</b> · track</span><span class="h">Watch it rise and fade</span><p>The fade rate (Phillips, 1993) fine-tunes true brightness. Now it's calibrated.</p></div>
-      </div>
-    </div>
-
-    <figure role="group">
-      <svg viewBox="0 0 720 240" role="img" aria-label="Block diagram: an image taken three weeks later minus the original image leaves one new dot of light — the supernova.">
-        <rect x="30" y="40" width="170" height="130" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <circle cx="75" cy="80" r="10" fill="currentColor" opacity=".28"/>
-        <circle cx="130" cy="70" r="7" fill="currentColor" opacity=".22"/>
-        <circle cx="160" cy="120" r="12" fill="currentColor" opacity=".3"/>
-        <circle cx="95" cy="135" r="8" fill="currentColor" opacity=".25"/>
-        <text x="115" y="196" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".7">night 1 · 5,000 galaxies</text>
-        <text x="238" y="112" text-anchor="middle" class="svg-label" fill="currentColor" font-size="22">−</text>
-        <rect x="275" y="40" width="170" height="130" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <circle cx="320" cy="80" r="10" fill="currentColor" opacity=".28"/>
-        <circle cx="375" cy="70" r="7" fill="currentColor" opacity=".22"/>
-        <circle cx="405" cy="120" r="12" fill="currentColor" opacity=".3"/>
-        <circle cx="340" cy="135" r="8" fill="currentColor" opacity=".25"/>
-        <circle cx="382" cy="128" r="4" fill="#b03a0e"/>
-        <text x="360" y="196" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".7">night 2 · three weeks later</text>
-        <text x="483" y="112" text-anchor="middle" class="svg-label" fill="currentColor" font-size="22">=</text>
-        <rect x="520" y="40" width="170" height="130" rx="8" fill="none" stroke="#b03a0e" stroke-width="1.8"/>
-        <circle cx="627" cy="128" r="5" fill="#b03a0e"/>
-        <circle cx="627" cy="128" r="11" fill="none" stroke="#b03a0e" stroke-width="1" opacity=".5"/>
-        <text x="605" y="196" text-anchor="middle" class="svg-small" fill="#8f2f0b">everything cancels — except one new dot</text>
-      </svg>
-      <figcaption><b>fig. 2 — subtraction hunting.</b> Old sky minus new sky. Whatever survives the subtraction is an explosion caught mid-detonation, billions of light-years out.</figcaption>
-    </figure>
-
-    <p>By late 1997 the High-Z team had a set of calibrated candles so distant their light left home when the universe was two-thirds its current age.</p>
-    <p>Riess's job: plot each one's <button class="term" data-card="c-redshift" aria-expanded="false" aria-controls="c-redshift">redshift</button> against its dimness, and read off the slowdown.</p>
-    <div class="card" id="c-redshift" role="note"><span class="t">concept · redshift</span><p>Expanding space stretches light to longer, redder wavelengths. A supernova's redshift records how much the universe grew while its light was traveling — a timestamp on the expansion.</p></div>
-    <p>The logic of the plot, in one breath: if expansion has been <strong>slowing</strong>, the universe covered ground fast early on, so light hasn't had to travel as far — distant supernovae should look a touch <strong>brighter</strong> than the naive line. If it never slowed: exactly on the line.</p>
-    <p>There was a third mathematical possibility. Nobody took it seriously.</p>
-  </div>
-</section>
-
-<!-- ═══════ PREDICTION ═══════ -->
-<section class="reveal">
-  <div class="col">
-    <div class="predict" id="predict">
-      <div class="pt">◈ prediction checkpoint — commit before you scroll</div>
-      <h3>January 1998. Riess runs the comparison. The distant supernovae come out…</h3>
-      <div class="opts" role="group" aria-label="Make your prediction">
-        <button class="opt" data-pick="A"><span class="k">A</span>Brighter than expected — slowing hard. Big Crunch someday. The ball falls back.</button>
-        <button class="opt" data-pick="B"><span class="k">B</span>On the line — barely slowing. The universe coasts forever.</button>
-        <button class="opt" data-pick="C"><span class="k">C</span>Dimmer than expected — farther than they have any right to be. Speeding up?</button>
-      </div>
-      <div class="verdict" id="verdict">
-        <div class="v" id="verdict-tag"></div>
-        <p id="verdict-body"></p>
-        <p><strong>The supernovae were too dim.</strong> Ten to fifteen percent farther than they had any right to be. The expansion isn't slowing. It's <em>accelerating</em> — the ball, thrown upward, falling up.</p>
-      </div>
-    </div>
-
-    <div class="locked" id="after-predict">
-      <figure role="group">
-        <svg viewBox="0 0 720 430" role="img" aria-label="Chart of dimness versus redshift. Three curves: decelerating universe (expected), coasting universe, and accelerating universe. The 1998 supernova data points fall along the accelerating curve, above the others.">
-          <line x1="70" y1="360" x2="680" y2="360" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr2)"/>
-          <line x1="70" y1="360" x2="70" y2="40" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr2)"/>
-          <defs>
-            <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
-            </marker>
-          </defs>
-          <text x="375" y="398" text-anchor="middle" class="svg-label" fill="currentColor">redshift → (farther back in time)</text>
-          <text x="34" y="200" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 34 200)">dimness → (farther away)</text>
-          <path d="M70 360 C 250 240, 430 170, 660 130" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="6 5" opacity=".45"/>
-          <text x="663" y="152" text-anchor="end" class="svg-small" fill="currentColor" opacity=".55">slowing down — what everyone expected</text>
-          <path d="M70 360 C 250 225, 430 145, 660 95" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2 5" opacity=".45"/>
-          <text x="700" y="99" text-anchor="end" class="svg-small" fill="currentColor" opacity=".55">coasting</text>
-          <path d="M70 360 C 250 210, 430 120, 660 58" fill="none" stroke="#b03a0e" stroke-width="2.4"/>
-          <text x="663" y="42" text-anchor="end" class="svg-small" fill="#b03a0e">accelerating ← the data landed here</text>
-          <g fill="#b03a0e">
-            <circle cx="205" cy="271" r="4.5"/><circle cx="260" cy="243" r="4.5"/><circle cx="318" cy="206" r="4.5"/>
-            <circle cx="378" cy="180" r="4.5"/><circle cx="428" cy="146" r="4.5"/><circle cx="487" cy="127" r="4.5"/>
-            <circle cx="540" cy="99" r="4.5"/><circle cx="596" cy="84" r="4.5"/>
-          </g>
-          <g stroke="#b03a0e" stroke-width="1" opacity=".55">
-            <line x1="205" y1="258" x2="205" y2="284"/><line x1="260" y1="230" x2="260" y2="256"/>
-            <line x1="318" y1="192" x2="318" y2="220"/><line x1="378" y1="166" x2="378" y2="194"/>
-            <line x1="428" y1="131" x2="428" y2="161"/><line x1="487" y1="112" x2="487" y2="142"/>
-            <line x1="540" y1="84" x2="540" y2="114"/><line x1="596" y1="68" x2="596" y2="100"/>
-          </g>
-          <line x1="500" y1="168" x2="500" y2="105" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>
-          <text x="488" y="190" text-anchor="end" class="svg-small" fill="currentColor" opacity=".7">this gap = the discovery</text>
-        </svg>
-        <figcaption><b>fig. 3 — the plot that broke cosmology</b> (schematic of the paper's Hubble diagram). The data sits above every slowing-universe curve. Too dim. Too far. Only acceleration fits.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ ACT 3 ═══════ -->
-<section class="locked reveal" id="act3">
-  <div class="col">
-    <div class="eyebrow"><span class="n">act 3</span> assume you screwed up</div>
-    <h2>“Somewhere between amazement and horror”</h2>
-    <p>That's Brian Schmidt describing his reaction. Not eureka. Horror.</p>
-    <p>Because when your measurement says the universe defies gravity, the likely explanation is that <strong>you</strong> made a mistake. And there was a second problem: pushed further, the math demanded something pushing space outward. The least-crazy candidate was Einstein's deleted fudge factor.</p>
-    <p>Junior scientists, about to resurrect the most famous blunder in physics, in public.</p>
-    <p>So they spent months attacking their own result. This is the part beginners never get shown, and it's the best part. Three suspects — for each one, guess the check before you reveal it.</p>
-
-    <div class="suspect">
-      <div class="sh"><span class="no">SUSPECT №1</span><span class="nm">Cosmic dust</span></div>
-      <p>Maybe the supernovae aren't far. Maybe they're just dimmed by dust in the way — headlights in fog.</p>
-      <button class="rbtn" data-r="r1" aria-expanded="false" aria-controls="r1">how would you check? → reveal</button>
-      <div class="rbody" id="r1"><p style="max-width:none">Dust doesn't just dim light — it <strong>reddens</strong> it. Same reason sunsets are red. The distant supernovae showed no reddening at all. To survive, the dust would need to be an exotic "gray" kind that dims all colors equally, spread evenly across the whole cosmos, invented purely to make this one measurement wrong.</p><span class="cleared">✓ suspect cleared</span></div>
-    </div>
-
-    <div class="suspect">
-      <div class="sh"><span class="no">SUSPECT №2</span><span class="nm">Ancient supernovae are different</span></div>
-      <p>These explosions happened billions of years ago, in younger galaxies with fewer heavy elements. Maybe old-recipe white dwarfs make dimmer bombs?</p>
-      <button class="rbtn" data-r="r2" aria-expanded="false" aria-controls="r2">how would you check? → reveal</button>
-      <div class="rbody" id="r2"><p style="max-width:none">Nearby galaxies also come in young-ish and old-ish flavors. Compare supernovae across both — after the fade-rate correction, they match beautifully. No drift with age.</p><span class="cleared">✓ suspect cleared</span></div>
-    </div>
-
-    <div class="suspect">
-      <div class="sh"><span class="no">SUSPECT №3</span><span class="nm">Their own pipeline</span></div>
-      <p>Software bugs, calibration errors, wishful statistics. How do you rule out <em>yourself</em>?</p>
-      <button class="rbtn" data-r="r3" aria-expanded="false" aria-controls="r3">how would you check? → reveal</button>
-      <div class="rbody" id="r3"><p style="max-width:none">You can't, alone. But remember the rivals? Perlmutter's team — different telescope time, different software, every incentive to catch the High-Z team in an error — was quietly finding <strong>the same dimness</strong> in their own 42 supernovae. When competitors converge, the instruments stop being the suspect. The universe becomes the suspect.</p><span class="cleared">✓ suspect cleared</span></div>
-    </div>
-
-    <p style="margin-top:1.8rem">Early 1998, Riess ran the formal statistics. Even with every check applied, the data insisted — above 99% confidence — on an accelerating universe with a nonzero cosmological constant.</p>
-    <p>The paper went out that spring. Perlmutter's 42 supernovae agreed the next year. Thirteen years later, the rivals flew to Stockholm together.</p>
-  </div>
-</section>
-
-<!-- ═══════ ACT 4 ═══════ -->
-<section class="locked reveal" id="act4">
-  <div class="col">
-    <div class="eyebrow"><span class="n">act 4</span> what it means</div>
-    <h2>Mostly made of something we can't name</h2>
-    <p>If expansion is accelerating, something is doing the pushing — some energy of empty space itself. Exactly the job Einstein once invented Λ for. Physicists gave the mystery a placeholder name: <strong>dark energy</strong>.</p>
-    <p>Then they did the bookkeeping on how much of it the acceleration requires. It's the most humbling accounting in science:</p>
-
-    <figure role="group">
-      <svg viewBox="0 0 720 190" role="img" aria-label="Bar showing the universe's energy budget: about 70 percent dark energy, 25 percent dark matter, 5 percent everything ever observed.">
-        <rect x="40" y="55" width="448" height="58" fill="#b03a0e" opacity=".92"/>
-        <rect x="488" y="55" width="160" height="58" fill="currentColor" opacity=".35"/>
-        <rect x="648" y="55" width="32" height="58" fill="currentColor"/>
-        <text x="264" y="88" text-anchor="middle" class="svg-label" fill="#ffffff">dark energy · ~70%</text>
-        <text x="568" y="88" text-anchor="middle" class="svg-small" fill="currentColor">dark matter · ~25%</text>
-        <line x1="664" y1="55" x2="664" y2="30" stroke="currentColor" stroke-width="1"/>
-        <text x="700" y="22" text-anchor="end" class="svg-small" fill="currentColor">~5% — every star, galaxy, planet, person ever seen</text>
-        <text x="40" y="145" class="svg-small" fill="currentColor" opacity=".65">← discovered by this paper. nobody knows what it is.</text>
-        <text x="40" y="166" class="svg-small" fill="currentColor" opacity=".45">(dark matter: also unknown, but that's a different paper)</text>
-      </svg>
-      <figcaption><b>fig. 4 — the energy budget.</b> Everything astronomy has ever photographed is the thin black sliver on the right.</figcaption>
-    </figure>
-
-    <div class="pull">The paper didn't just change the universe's fate. It demoted everything we can see to a rounding error.</div>
-
-    <p>And about that bet you placed in Act 0 — the fate did change. Not a crunch. Not a coast. A third ending nobody ordered:</p>
-
-    <figure role="group">
-      <svg viewBox="0 0 720 350" role="img" aria-label="Three curves of universe size over time: Big Crunch rises then falls, coasting rises and levels, runaway acceleration curves upward. A vertical line marks now, 1998.">
-        <line x1="60" y1="300" x2="690" y2="300" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr3)"/>
-        <line x1="60" y1="300" x2="60" y2="35" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr3)"/>
-        <defs>
-          <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
-          </marker>
-        </defs>
-        <text x="375" y="336" text-anchor="middle" class="svg-label" fill="currentColor">time →</text>
-        <text x="26" y="170" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 26 170)">size of universe →</text>
-        <!-- shared past -->
-        <path d="M60 300 C 140 220, 200 180, 280 155" fill="none" stroke="currentColor" stroke-width="2"/>
-        <!-- now marker -->
-        <line x1="280" y1="300" x2="280" y2="60" stroke="currentColor" stroke-width="1" stroke-dasharray="3 4" opacity=".5"/>
-        <text x="280" y="50" text-anchor="middle" class="svg-small" fill="currentColor" opacity=".7">1998 · you are here</text>
-        <!-- crunch -->
-        <path d="M280 155 C 380 128, 480 140, 560 300" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="6 5" opacity=".45"/>
-        <text x="573" y="290" class="svg-small" fill="currentColor" opacity=".55">crunch 💥</text>
-        <!-- coast -->
-        <path d="M280 155 C 400 120, 540 95, 680 78" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2 5" opacity=".45"/>
-        <text x="600" y="72" class="svg-small" fill="currentColor" opacity=".55">coast</text>
-        <!-- runaway -->
-        <path d="M280 155 C 400 118, 520 90, 620 38" fill="none" stroke="#b03a0e" stroke-width="2.4"/>
-        <text x="640" y="28" text-anchor="end" class="svg-small" fill="#b03a0e">runaway — the actual answer</text>
-      </svg>
-      <figcaption><b>fig. 5 — three endings.</b> The past is shared; 1998 chose the future. Expansion accelerates forever. Distant galaxies slip, one by one, over the edge of visibility.</figcaption>
-    </figure>
-
-    <p>What <em>is</em> dark energy? Twenty-eight years later: still nobody knows. It's arguably the biggest open problem in physics.</p>
-    <p>And the story isn't closed. Since 2024, the DESI survey has seen hints — hints, not verdicts — that dark energy may be weakening over time. Which would break the simple picture all over again. The next act may already be in the data.</p>
-
-    <h3>The skeptic's corner</h3>
-    <p style="color:var(--muted); font-size:1rem">A result this strange deserves suspicion. Each objection below is real. Each was answered.</p>
-    <details><summary><span class="q">Q</span>Couldn't it still be dust, but weirder dust?</summary><div class="a">There's a kill shot. Very early on, the universe was dense enough that expansion really was decelerating — so the <em>most</em> distant supernovae should flip to looking <strong>brighter</strong> than the naive line. In 2001–2004, Riess found them. They flipped. Dust can only ever dim; it can't bend the curve both ways.</div></details>
-    <details><summary><span class="q">Q</span>Isn't ~10 supernovae a tiny sample?</summary><div class="a">Yes — this paper leaned on 10 well-measured distant ones (16 total). That's why the rival team's independent 42 mattered so much. Today the samples number in the thousands and the signal has only sharpened.</div></details>
-    <details><summary><span class="q">Q</span>Does anything besides supernovae agree?</summary><div class="a">The clincher. The cosmic microwave background and the clustering pattern of galaxies — two totally different measurements — independently demand the same ~70/25/5 budget. Three unrelated rulers, one answer.</div></details>
-    <details><summary><span class="q">Q</span>Could it be a statistical fluke?</summary><div class="a">The 1998 paper claimed &gt;99% confidence — good, not overwhelming. But flukes fade as data grows. This signal grew. By the mid-2000s it had passed every reasonable bar, which is why Stockholm called in 2011.</div></details>
-  </div>
-</section>
-
-<!-- ═══════ WRAP ═══════ -->
-<section class="locked reveal" id="wrap">
-  <div class="col">
-    <div class="eyebrow"><span class="n">end</span> your read, tallied</div>
-    <h2>What you just did</h2>
-    <div class="tally">
-      <div><span class="num" id="tally-concepts">0</span><span class="lbl">concepts unlocked</span></div>
-      <div><span class="num" id="tally-suspects">0<span style="font-size:1.3rem">/3</span></span><span class="lbl">suspects cleared</span></div>
-      <div><span class="num" id="tally-predict">—</span><span class="lbl">your prediction</span></div>
-      <div><span class="num" id="tally-bet">—</span><span class="lbl">your act-0 bet</span></div>
-    </div>
-    <p id="bet-callback" style="color:var(--muted)"></p>
-    <p>You now know why the expansion is accelerating, how an exploding white dwarf becomes a tape measure, and why two rivals agreeing beats either one's data. That's the content of a Nobel-winning paper. Only the equations were left out.</p>
-    <p>Want the real thing? It's free: <a href="https://arxiv.org/abs/astro-ph/9805201" rel="noopener">arXiv : astro-ph/9805201</a>. Start with the abstract and Section 5 — you'll recognize everything.</p>
-
-    <h3>Read next</h3>
-    <div class="nextgrid">
-      <div class="next"><span class="tag">🤖 ai · matches your tags</span><span class="h">The AI that memorized… then suddenly understood</span><p>"Grokking" — networks that snap into real understanding long after training should've stopped. ~20 min.</p></div>
-      <div class="next"><span class="tag">🔭 + 🤖 both your tags</span><span class="h">The neural net that found two planets</span><p>Google + NASA trained a network on Kepler data; it caught worlds humans missed. ~15 min.</p></div>
-      <div class="next"><span class="tag">🔭 astronomy · shorter</span><span class="h">The planet that shouldn't exist</span><p>The first exoplanet was a Jupiter hugging its star — impossible, per every theory. ~15 min.</p></div>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <footer>
-  <div class="col">the enriched read · paper Nº 001 · source: Riess et al. 1998, AJ 116, 1009 · quotes and history per published accounts · figures schematic, not to scale</div>
+  <div class="wrap">
+    <span>the enriched read · retellings of real, cited papers — originals always linked</span>
+    <span><a href="https://github.com/AdityaANS/the-enriched-read" rel="noopener">github</a></span>
+  </div>
 </footer>
 
 <script>
 (function(){
-  // reading progress
-  var bar = document.getElementById('pbar');
-  function onScroll(){
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
-  document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var dots = function(d){ return '●'.repeat(d) + '○'.repeat(4 - d); };
 
-  // concept cards
-  var unlocked = 0;
-  var tallyC = document.getElementById('tally-concepts');
-  document.querySelectorAll('.term').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var card = document.getElementById(btn.getAttribute('data-card'));
-      var open = card.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open && !btn.dataset.counted){ btn.dataset.counted = '1'; unlocked++; tallyC.textContent = unlocked; }
-    });
-  });
+  fetch('papers.json').then(function(r){ return r.json(); }).then(function(data){
+    var byId = {};
+    data.papers.forEach(function(p){ byId[p.id] = p; });
+    var issue = data.issue;
 
-  // act-0 bet
-  var bet = null;
-  var betNotes = {
-    crunch: 'Noted: gravity wins. A dramatic choice. Hold that thought for about fifteen minutes.',
-    coast: 'Noted: the quiet ending. The 1990s consensus pick, for what it’s worth. Hold that thought.'
-  };
-  document.querySelectorAll('.betopt').forEach(function(b){
-    b.addEventListener('click', function(){
-      if (bet) return; bet = b.getAttribute('data-bet');
-      b.classList.add('picked');
-      document.querySelectorAll('.betopt').forEach(function(o){ if(o!==b) o.classList.add('dim'); });
-      var n = document.getElementById('betnote');
-      n.textContent = betNotes[bet]; n.classList.add('show');
-      document.getElementById('tally-bet').textContent = bet === 'crunch' ? '💥' : '∞';
-    });
-  });
+    document.getElementById('issue-no').textContent = '№ ' + issue.number;
+    document.getElementById('issue-date').textContent = issue.date;
 
-  // dimness slider
-  var slider = document.getElementById('dist');
-  var core = document.getElementById('sn-core'), glow = document.getElementById('sn-glow'), lbl = document.getElementById('sn-lbl');
-  var roD = document.getElementById('ro-d'), roF = document.getElementById('ro-f');
-  function drawSN(){
-    var v = +slider.value;                 // 10..100
-    var x = 130 + (v - 10) * (520 / 90);   // 130..650
-    var rel = v / 10;                      // 1..10 (relative distance)
-    var dim = rel * rel;                   // inverse-square
-    var r = Math.max(2.2, 12 / rel);
-    core.setAttribute('cx', x); core.setAttribute('r', r);
-    glow.setAttribute('cx', x); glow.setAttribute('r', r * 2.2);
-    glow.setAttribute('opacity', Math.max(.04, .18 / rel));
-    lbl.setAttribute('x', x);
-    roD.textContent = (v / 10).toFixed(1) + ' billion ly';
-    roF.textContent = (dim).toFixed(0) + '×';
-  }
-  slider.addEventListener('input', drawSN); drawSN();
-
-  // prediction
-  var verdicts = {
-    A: ['you sided with 1990s cosmology', 'Fair. This is what nearly every professional believed — it’s what both teams expected to confirm. Which is what makes what happened next hurt so much:'],
-    B: ['you predicted the quiet universe', 'The moderate pick — an eternal coast was the boring-but-plausible option. The data wasn’t in a moderate mood:'],
-    C: ['you picked the "too silly" option', 'Either you’ve heard this story, or your instincts are wonderfully unreasonable. Working cosmologists dismissed this one out of hand. And:']
-  };
-  var picked = false;
-  document.querySelectorAll('.opt').forEach(function(opt){
-    opt.addEventListener('click', function(){
-      if (picked) return; picked = true;
-      var k = opt.getAttribute('data-pick');
-      opt.classList.add('picked');
-      document.querySelectorAll('.opt').forEach(function(o){ if(o!==opt) o.classList.add('dim'); });
-      document.getElementById('verdict-tag').textContent = '◈ ' + verdicts[k][0];
-      document.getElementById('verdict-body').textContent = verdicts[k][1];
-      document.getElementById('verdict').classList.add('show');
-      document.getElementById('tally-predict').textContent = k;
-      ['after-predict','act3','act4','wrap'].forEach(function(id){
-        document.getElementById(id).classList.add('show');
+    // cover story
+    var c = byId[issue.cover];
+    if (c) {
+      var card = document.getElementById('cover-card');
+      card.href = c.url || '#';
+      document.getElementById('cover-title').textContent = c.title;
+      document.getElementById('cover-hook').textContent = c.hook;
+      document.getElementById('cover-cite').textContent = c.citation + (c.status === 'live' ? '' : ' · coming soon');
+      var meta = document.getElementById('cover-meta');
+      var chips = ['⏱ ~' + c.minutes + ' min', 'difficulty ' + dots(c.difficulty)];
+      c.tags.forEach(function(t){
+        var tag = data.tags[t];
+        if (tag) chips.push(tag.emoji + ' ' + tag.label);
       });
-      // bet callback text
-      var cb = document.getElementById('bet-callback');
-      if (bet === 'crunch') cb.textContent = 'Your Act-0 bet was the Big Crunch. The universe picked door number three: no crunch, no coast — a runaway.';
-      else if (bet === 'coast') cb.textContent = 'Your Act-0 bet was the eternal coast. So close — and yet the universe picked door number three: a runaway.';
-      else cb.textContent = 'You never placed the Act-0 bet — which, honestly, is what the universe did too. It picked an option that wasn’t on the menu.';
+      if (c.badge) chips.push(c.badge);
+      chips.forEach(function(t){ meta.appendChild(el('span','chip',t)); });
+    }
+
+    // table of contents
+    var toc = document.getElementById('toc');
+    issue.picks.forEach(function(id){
+      var p = byId[id];
+      if (!p) return;
+      var live = p.status === 'live' && p.url;
+      var row = el(live ? 'a' : 'div', 'row' + (live ? '' : ' dim'));
+      if (live) row.href = p.url;
+      row.appendChild(el('span','no', p.n));
+      var mid = el('span');
+      mid.appendChild(el('span','t', p.title));
+      mid.appendChild(el('span','h', p.hook));
+      row.appendChild(mid);
+      var side = el('span','side');
+      var fields = p.tags.map(function(t){ return data.tags[t] ? data.tags[t].emoji : ''; }).join(' ');
+      if (live) {
+        side.textContent = fields + ' · ~' + p.minutes + ' min · read →';
+      } else {
+        side.appendChild(document.createTextNode(fields + ' · ~' + p.minutes + ' min · '));
+        side.appendChild(el('span','soon','in the works'));
+      }
+      row.appendChild(side);
+      toc.appendChild(row);
     });
+  }).catch(function(){
+    document.getElementById('toc').textContent = 'Could not load the catalog — try refreshing.';
   });
 
-  // suspects
-  var clearedN = 0;
-  var tallyS = document.getElementById('tally-suspects');
-  document.querySelectorAll('.rbtn').forEach(function(b){
-    b.addEventListener('click', function(){
-      b.setAttribute('aria-expanded','true');
-      document.getElementById(b.getAttribute('data-r')).classList.add('show');
-      clearedN++;
-      tallyS.innerHTML = clearedN + '<span style="font-size:1.3rem">/3</span>';
-    });
-  });
-
-  // gentle reveal
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduce && 'IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
     }, {threshold:.08});
-    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+    document.querySelectorAll('.reveal').forEach(function(x){ io.observe(x); });
   } else {
-    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('.reveal').forEach(function(x){ x.classList.add('in'); });
   }
 })();
 </script>
+</body>
+</html>
